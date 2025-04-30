@@ -1,0 +1,26 @@
+# Routes File
+# This file defines all application routes (Higher priority routes should be placed first).
+
+# Static Assets
+# Route to serve static files like stylesheets, scripts, and images.
+GET     /assets/*file                       controllers.Assets.versioned(path="/public", file: Asset)
+
+# Home Page
+# Route for the main home page.
+GET     /                                   controllers.HomeController.index
+
+# Session API
+# Route to start a new session.
+POST    /session/start                      controllers.HomeController.startSession
+# Route to stop an existing session.
+POST    /session/stop                       controllers.HomeController.stopSession
+# Route to add a lap to a session by its session ID.
+POST    /addLap/:sessionId                  controllers.HomeController.addLap(sessionId: String)
+
+# Fetch Sessions
+# Route to fetch all sessions for a specific user by their userId.
+GET     /sessions/:userId                   controllers.SessionController.getSessionsForUser(userId: String)
+
+# Database Testing
+# Route to test the database connection.
+GET     /test-db-connection                 controllers.HomeController.testDbConnection

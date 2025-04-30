@@ -1,0 +1,94 @@
+@(sessions: Seq[models.Session], title: String)(implicit request: play.api.mvc.RequestHeader)
+
+<html>
+<head>
+    <title>@title</title>
+    <link rel="stylesheet" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="@routes.Assets.versioned("javascripts/main.js")" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="csrfToken" content="@play.filters.csrf.CSRF.getToken.map(_.value).getOrElse("")">
+
+
+</head>
+<body>
+    <!-- Header Section -->
+    <div class="header">
+        <button id="pomodoro-button" class="mode-button" onclick="startPomodoro()">Pomodoro</button>
+        <button id="time-boxing-button" class="mode-button" onclick="startTimeBoxing()">Time Boxing</button>
+        <button id="feynman-button" class="mode-button" onclick="startFeynman()">Feynman</button>
+    </div>
+
+    <!-- Layout -->
+    <div class="layout-container">
+        <!-- Buttons Section -->
+        <div class="button-container">
+            <!-- Start/Pause button toggles icon dynamically -->
+            <button id="start-button" class="btn-primary" onclick="toggleTimer()">
+                <i class="fas fa-play" id="start-icon"></i>
+            </button>
+            <!-- Lap Button -->
+            <button id="lap-button" class="btn-secondary" onclick="addLap()">
+                <i class="fas fa-flag"></i>
+            </button>
+            <!-- Stop Button -->
+            <button id="stop-button" class="btn-danger" onclick="stopTimer()">
+                <i class="fas fa-stop"></i>
+            </button>
+        </div>
+
+        <!-- Timer Section -->
+        <div class="timer-container">
+            <div class="circle-timer">
+                <svg viewBox="0 0 100 100">
+                    <circle class="timer-background" cx="50" cy="50" r="45"></circle>
+                    <circle class="timer-progress" cx="50" cy="50" r="45"></circle>
+                </svg>
+                <div class="time">
+                    <span id="minutes">00</span>:<span id="seconds">00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Laps and Streaks Section -->
+        <div class="laps-streaks-box">
+            <h3>Laps & Streaks</h3>
+            <div id="laps-streaks-list">
+                <!-- Laps and streaks will be dynamically added here -->
+            </div>
+            <!-- Clear Laps Button -->
+        </div>
+        <!-- Session Details Section -->
+            <!-- Session History Section (This is from sessions.html) -->
+            <h3 class="session-history-title">Session History</h3>
+
+    <div class="session-history-container">
+        <div class="session-history">
+            <ul>
+                @for(session <- sessions) {
+                    <li>
+                        <div><strong>Start Time:</strong> @session.startTime</div>
+                        <div><strong>End Time:</strong> @session.endTime</div>
+                        <div><strong>Duration:</strong> @session.duration</div>
+                        <div><strong>Laps:</strong> @session.laps</div>
+                        <div><strong>Streaks:</strong> @session.streaks</div>
+                    </li>
+                }
+            </ul>
+        </div>
+        </div>
+        <button class="toggle-session-button" onclick="toggleSessionHistory()"><i class='fas fa-angle-double-down'></i></button>
+
+    </div>
+        <!-- Break Warning Modal -->
+        <div id="break-warning-modal" class="modal">
+            <div class="modal-content">
+                <h2>Take a Brea k!</h2>
+                <p>Pause for 5 mins and relax before continuing.</p>
+                <button id="close-warning-modal" class="modal-button">OK</button>
+            </div>
+        </div>
+    </body>
+    </html>
+</body>
+</html>

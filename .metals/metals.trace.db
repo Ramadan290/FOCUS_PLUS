@@ -1,0 +1,6 @@
+2024-12-28 23:20:57.986290+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "FINGERPRINTS" not found; SQL statement:
+select path, text, md5 from fingerprints; [42102-232]
+2024-12-29 00:28:40.455744+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "FINGERPRINTS" not found; SQL statement:
+insert into fingerprints (path, text, md5) values (?, ?, ?) [42102-232]
